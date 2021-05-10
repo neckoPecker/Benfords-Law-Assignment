@@ -1,0 +1,29 @@
+#+title:	Methods Assignment 2
+#+date:		2021-05-12
+#+options:	toc:2
+
+* Business Overview
+
+You have been asked to help a retail company in Canada to setup their *customer information* and *sales analysis system*.Your solution should be as robust (defect free) as possible. Your source code should be: modular, readable, and use standards for the language. Internal documentation should be provided for methods/functions, and classes.
+
+*At this point, we have completed Part A - Customer Information*.
+
+* Sales Analysis - Part B
+
+You have also been asked to build a *sales analysis system*. There are 2 requirements of the sales system. There should be a user option to provide a total sales amount based on the sales data file "*sales.csv*" and there should be an option to check the sales data for possible accounting fraud.
+
+To perform the accounting fraud task, you will need to validate the sales data using Benford's Law. Benford's Law is based on the distribution of the first digits of numeric data.
+
+The Sales Analysis System should perform the following tasks:
+
+ 1. Load the sales data from the input file provided "sales.csv". You do not need to prompt the user for the input file name.
+ 2. Analyze the entire sales data provided to determine if it complies with Benford's Law.
+    1. The user should see a numeric and/or visual representation of the distribution of the first digits from 1 to 9.
+    2. If the first digit frequency is between 29% and 32% then the system should state that the data indicates that fraud likely did not occur.
+    3. Export the digit frequency in the form of a .csv file called "results.csv" into the same directory as the program.
+
+* Benford's Law
+
+Benford's Law is an observable distribution of the first digits. If the first digit was uniformly distributed from 1 to 9 then the probability of observing a 1 as the first digit is P(x="1") = 1/9 or approximately 11%.
+
+Benford observed that with many datasets, the digit 1 and 2 occur at a much higher frequency and are not uniformly distributed as it might be expected. As you can see in the distribution table shown here the probability of the first digit of 1 is around 30%.
