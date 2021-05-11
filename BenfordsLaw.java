@@ -67,4 +67,51 @@ class BenfordsLaw {
 	
 	return sales;
     }
+
+    /**
+	 * Get first digit number quantities from 1 to 9.
+	 * <p>
+	 * In accordance to Benford's Law, it states that the first digits
+	 * that should appear the most is 1 and 2. If graphically layed out,
+	 * there should be a natural cuve from 1 to 9. For the purpose of
+	 * the assignment, if the fequency percentage of 1 appears between
+	 * 29% and 32%, fraud most likely had not happen.	
+	 * <p>	
+	 * @param numbers	An array of integers to check for first-digit	
+	 * @return		The frequency of each first digit number
+	 */
+    public static int[] getFirstNums(int[] numbers) {
+
+	/*
+	 * The strategy for getting the first numbers is to iterate through all
+	 * the numbers 9 times from 1 to 9. For each number, it checks the first
+	 * digit and, if it is equal to the number being checked, it is added to 
+	 * the array of the same index.	
+	 */
+	int[] firstNums = new int[9];				// Array consisting frequency of numbers
+								// from 1 to 9.
+
+	for (int i = 0; i < 9; i++) {
+	    for (int number : numbers) {
+		
+		/*
+		 * Integer -> String -> Character -> Integer
+		 * 	Each number gets converted to a string. Using the function
+		 * 	'charAt(0)', I can get the first element of the string, but
+		 * 	as a character. Then I use a character method to convert
+		 * 	a characater value back into an integer.
+		 * 
+		 * For example, say that 45638 was the number to check:
+		 * 	(int) 45638 -> (string) "45638" -> (char) '4' -> (int) 4
+		 */
+		int firstDigit = Character.getNumericValue(Integer.toString(number).charAt(0));
+
+		if (firstDigit == i + 1) {			// Add 1, otherwise it would check
+		    firstNums[i]++;				// numbers 0-8 instead.
+		}
+	    }
+	    
+	    return firstNumss;
+	}
+    }
 }
