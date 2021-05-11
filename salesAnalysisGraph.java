@@ -18,23 +18,23 @@ public class salesAnalysisGraph extends Application {
         NumberAxis y = new NumberAxis();
         y.setLabel("Percentage (%)");
         //bar chart creation
-        BarChart bc = new BarChart(x, y);
-        bc.setTitle("Benford Law Analysis");
+        BarChart analysisLawGraph = new BarChart(x, y);
+        analysisLawGraph.setTitle("Benford Law Analysis");
         //add values
-        XYChart.Series ds = new XYChart.Series();
-        ds.setName("Percentage of Benford Digit");
-        ds.getData().add(new XYChart.Data("1", 33));
-        ds.getData().add(new XYChart.Data("2"  , 25));
-        ds.getData().add(new XYChart.Data("3"  , 10));
-        ds.getData().add(new XYChart.Data("4", 33));
-        ds.getData().add(new XYChart.Data("5"  , 25));
-        ds.getData().add(new XYChart.Data("6"  , 9));
-        ds.getData().add(new XYChart.Data("7", 33));
-        ds.getData().add(new XYChart.Data("8"  , 25));
-        ds.getData().add(new XYChart.Data("9"  , 10));
-        bc.getData().add(ds);
+        XYChart.Series benfordGraph = new XYChart.Series();
+        benfordGraph.setName("Percentage of Benford Digit");
+        benfordGraph.getData().add(new XYChart.Data("1", 33));
+        benfordGraph.getData().add(new XYChart.Data("2"  , 25));
+        benfordGraph.getData().add(new XYChart.Data("3"  , 10));
+        benfordGraph.getData().add(new XYChart.Data("4", 33));
+        benfordGraph.getData().add(new XYChart.Data("5"  , 25));
+        benfordGraph.getData().add(new XYChart.Data("6"  , 9));
+        benfordGraph.getData().add(new XYChart.Data("7", 33));
+        benfordGraph.getData().add(new XYChart.Data("8"  , 25));
+        benfordGraph.getData().add(new XYChart.Data("9"  , 10));
+        analysisLawGraph.getData().add(benfordGraph);
         //vertical box
-        VBox vbox = new VBox(bc);
+        VBox vbox = new VBox(analysisLawGraph);
         Scene sc = new Scene(vbox, 800, 700);
         s.setScene(sc);
         s.setHeight(500);
