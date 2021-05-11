@@ -111,6 +111,19 @@ class BenfordsLaw {
 		}
 	    }
 	}
+	
 	return firstNums;
+    }
+
+    /**
+     * Program starst here.
+     */
+    public static void main(String[] args) {
+	int[] sales = getSalesData("./sales.csv");		// Get sales data
+	int[] firstNums = getFirstNums(sales);			// Get first nums using sales data
+
+	for (int num : firstNums) {				// TEST: Print frequencies
+	    System.out.println(num);
+	}
     }
 }
