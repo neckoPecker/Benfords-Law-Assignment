@@ -110,8 +110,7 @@ class BenfordsLaw {
 		    firstNums[i]++;				// numbers 0-8 instead.
 		}
 	    }
-	    
-	    return firstNumss;
 	}
+	return firstNums;
     }
 }
