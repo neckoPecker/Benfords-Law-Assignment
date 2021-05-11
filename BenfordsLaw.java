@@ -116,14 +116,44 @@ class BenfordsLaw {
     }
 
     /**
+     * Return the percentage of numbers of an array to their complete sum
+     * @param numbers	The numbers to get the percentage from
+     * @return		The percentage of all numbers to the sum of them (in order)	
+     */
+    public static float[] numberToPercentages(int[] numbers) {
+
+	int numTotal = 0;
+	
+	for (int number : numbers) {				// Add sum of all numbers in total
+	    numTotal += number;
+	}
+
+	float[] percentages = new float[numbers.length];	// Size of array of percentage is the
+								// same as size of array of numbers
+	
+	for (int i = 0; i < numbers.length; i++) {
+	    percentages[i] = (float) numbers[i] / numTotal * 100;	// Divide number to total for decimal
+	    								// and multiply by 100 for percentage
+	}
+
+	return percentages;
+    }
+	
+    /**
      * Program starst here.
      */
     public static void main(String[] args) {
 	int[] sales = getSalesData("./sales.csv");		// Get sales data
 	int[] firstNums = getFirstNums(sales);			// Get first nums using sales data
 
-	for (int num : firstNums) {				// TEST: Print frequencies
-	    System.out.println(num);
+	// for (int num : firstNums) {				// TEST: Print frequencies
+	//     System.out.println(num);
+	// }
+
+	float[] percentages = numberToPercentages(firstNums);
+	
+	for (float percent : percentages) {
+	    System.out.println(percent);
 	}
     }
 }
