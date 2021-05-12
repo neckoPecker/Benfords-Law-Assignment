@@ -15,7 +15,10 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text; 
 
 //Imports for I/O
 import java.util.Scanner;
@@ -63,19 +66,27 @@ public class salesAnalysisGraph extends Application {
 		}
 		outputFile("results.csv", firstNumsOutput);
 
+		Text t = new Text();
+		t.setFont(Font.font ("Verdana", 15));
 		// Check if fraud has occured
 		if (percentages[0] >= 29 && percentages[0] <= 32) {
 		    System.out.println("Fraud has not likely occured.");
+			//Sets text for displaying in bar graph alerting the user
+			t.setText(" > Fraud has not likely occured.");
+			t.setFill(Color.BLUE);
 		} else {
 		    System.out.println("ALERT! FRAUD HAS LIKELY OCCURED!!!");
+			//Sets text for displaying in bar graph alerting the user
+			t.setText(" > ALERT! FRAUD HAS LIKELY OCCURED!!!");
+			t.setFill(Color.RED);
 		}
-
 		/*
 		Bar Graph
 
 		This portion of the start method will be the part where the bar graph is made and then displayed. The values will be 
 		passed from the methods called above to be used as the values for the bar graph
 		*/
+
 		//Creates a new x/Category Axis of the bar graph
 		CategoryAxis x = new CategoryAxis();
 		//Names the label of x Axis
@@ -101,14 +112,18 @@ public class salesAnalysisGraph extends Application {
 		}
 		//Adds the data of series to the bar graph 
 		analysisLawGraph.getData().add(benfordGraph);
+		
+
+
+
 		//Creates a new Vertical box to place the bar graph
-		VBox vbox = new VBox(analysisLawGraph);
+		VBox vbox = new VBox(analysisLawGraph, t);
 		//Creates a new scene with the bar graph in it
-		Scene sc = new Scene(vbox, 800, 900);
+		Scene sc = new Scene(vbox, 1000, 1000);
 		//Adds the new scene to the one from JavaFx packages
 		stage.setScene(sc);
 		//Sets the original scene to dimensions
-		stage.setHeight(400);
+		stage.setHeight(465);
 		stage.setWidth(600);
 		//Displays the stage with the bar graph in it
 		stage.show();
