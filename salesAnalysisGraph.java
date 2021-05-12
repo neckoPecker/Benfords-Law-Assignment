@@ -17,7 +17,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-// Imports for I/O
+//Imports for I/O
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.FileReader;
@@ -105,52 +105,14 @@ public class salesAnalysisGraph extends Application {
 		stage.setWidth(600);
 		//Displays the stage with the bar graph in it
 		stage.show();
-=======
-
-
-	//Bar graph
-	stage.setTitle("Graph Stage");
-	//x axis
-	CategoryAxis x = new CategoryAxis();
-	x.setLabel("Benford Digit");
-	//y axis
-	NumberAxis y = new NumberAxis();
-	y.setLabel("Percentage (%)");
-	//bar chart creation
-	BarChart analysisLawGraph = new BarChart(x, y);
-	analysisLawGraph.setTitle("Benford Law Analysis");
-	//add values
-	XYChart.Series benfordGraph = new XYChart.Series();
-	benfordGraph.setName("Percentage of Benford Digit");
-	benfordGraph.getData().add(new XYChart.Data("1", 43));
-	benfordGraph.getData().add(new XYChart.Data("2", 25));
-	benfordGraph.getData().add(new XYChart.Data("3", 10));
-	benfordGraph.getData().add(new XYChart.Data("4", 33));
-	benfordGraph.getData().add(new XYChart.Data("5", 25));
-	benfordGraph.getData().add(new XYChart.Data("6", 9));
-	benfordGraph.getData().add(new XYChart.Data("7", 33));
-	benfordGraph.getData().add(new XYChart.Data("8", 25));
-	benfordGraph.getData().add(new XYChart.Data("9", 10));
-	analysisLawGraph.getData().add(benfordGraph);
-	//vertical box
-	VBox vbox = new VBox(analysisLawGraph);
-	Scene sc = new Scene(vbox, 800, 700);
-	stage.setScene(sc);
-	stage.setHeight(500);
-	stage.setWidth(600);
-	stage.show();
->>>>>>> file-operations
     }
 
-    /**
-     * Gets an array of all the sales data found in a CSV file
-     * <p>
-     * Given a comma-seperated file, this method first parses the file into a string
-     * of comma-seperated values. Then, it splits the values into an array and
-     * returns an array containing only the sales data.
-     * <p>
-     * @param csvFileName	The path and directory of the csv file.	
-     * @return			Alls sales in the CSV file as an array of integers
+	/* Method Name: getSalesData()
+     * Description: Gets an array of all the sales data found in a CSV file. Given a comma-seperated file, this method first parses the file into a string
+     * 				of comma-seperated values. Then, it splits the values into an array and returns an array containing only the sales data.
+     * @author: Vaughn C
+	 * @parameter: csvFileName (Gets the file path)
+	 * @return: sales (int array with each sales in array)
      */
     public static int[] getSalesData(String csvFileName) {
 
@@ -206,17 +168,13 @@ public class salesAnalysisGraph extends Application {
 		return sales;
     }
 
-    /**
-     * Get first digit number quantities from 1 to 9.
-     * <p>
-     * In accordance to Benford's Law, it states that the first digits
-     * that should appear the most is 1 and 2. If graphically layed out,
-     * there should be a natural cuve from 1 to 9. For the purpose of
-     * the assignment, if the fequency percentage of 1 appears between
-     * 29% and 32%, fraud most likely had not happen.	
-     * <p>	
-     * @param numbers	An array of integers to check for first-digit	
-     * @return		The frequency of each first digit number
+    /* Method Name: getFirstNums() 
+     * Description: Get first digit number quantities from 1 to 9.In accordance to Benford's Law, it states that the first digits
+     * 				that should appear the most is 1 and 2. If graphically layed out, there should be a natural cuve from 1 to 9. For the purpose of
+     * 				the assignment, if the fequency percentage of 1 appears between 29% and 32%, fraud most likely had not happen.	
+     * @author: Vaughn C
+     * @parameter: numbers (An array of integers to check for first-digit)	
+     * @return: firstNums (An array for the frequency of each first digit number)
      */
     public static int[] getFirstNums(int[] numbers) {
 
@@ -253,10 +211,11 @@ public class salesAnalysisGraph extends Application {
 		return firstNums;
     }
 
-    /**
-     * Return the percentage of numbers of an array to their complete sum
-     * @param numbers	The numbers to get the percentage from
-     * @return		The percentage of all numbers to the sum of them (in order)	
+    /* Method Name: numberToPercentages()
+     * Description: Return the percentage of numbers of an array to their complete sum
+	 * @author: Vaughn C 
+     * @parameter: numbers (The numbers to get the percentage from)
+     * @return: percentages (The percentage of all numbers to the sum of them in order)	
      */
     public static float[] numberToPercentages(int[] numbers) {
 
@@ -277,14 +236,11 @@ public class salesAnalysisGraph extends Application {
 		return percentages;
     }
 
-    /**
-     * Get and verify a csv file path form user
-     * <p>
-     * This method asks the user for an input for a file or location to a file. If the
-     * user inputted a file that doesn't exist, or just a directory, then it keeps asking
-     * until what they have entered is valid.	
-     * <p>
-     * @return	A valid string of a file path.
+    /* Method Name: getFilePath()
+     * Description: Get and verify a csv file path form user This method asks the user for an input for a file or location to a file. 
+	 * 				If the user inputted a file that doesn't exist, or just a directory, then it keeps asking until what they have entered is valid.	
+     * @author: Vaughn C
+     * @return: A valid string of a file path.
      */
     public static String getFilePath() {
 
@@ -310,14 +266,12 @@ public class salesAnalysisGraph extends Application {
 	return filePath;
     }
 
-    /**
-     * Write a multidimensional array into a file
-     * <p>
-     * The 2D array is used to represent a table of values. This should
-     * be created before calling this function.	
-     * <p>	
-     * @param fileLocation	Where the file should be written/created to.
-     * @param outputs	A 2D array, representing row and column values.	
+    /* Method Name: outputFile()
+     * Description: Write a multidimensional array into a file The 2D array is used to represent a table of values. 
+	 * 				This should be created before calling this function.	
+     * @author: Vaughn C 	
+     * @param: fileLocation (Where the file should be written/created to)
+     * @param: outputs (A 2D array, representing row and column values.)	
      */	
     public static void outputFile(String fileLocation, String[][] outputs) {
 	
