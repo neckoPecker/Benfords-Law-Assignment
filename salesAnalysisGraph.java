@@ -2,9 +2,9 @@
 Due date: 2021, 05, 12
 Date: 2021, 05, 10
 Names: Tyson Z and Vaughn C
+Teacher: Mr. Ho
 Description: This code will be able receive files, read them, and be able to find the first digit distribution 
 			 according to Benford's Law. After calculating the percentage, the program will display a graph and export a table. 
-			 
 */
 
 //Importing JavaFX applications for bar graph
