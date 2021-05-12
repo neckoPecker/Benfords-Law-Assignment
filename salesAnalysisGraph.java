@@ -16,6 +16,12 @@ public class salesAnalysisGraph extends Application {
 
     @Override
     public void start(Stage stage) {
+        
+        //Start your code here Vaughn 
+        
+        
+        
+        //Bar graph
         stage.setTitle("Graph Stage");
         //x axis
         CategoryAxis x = new CategoryAxis();
@@ -29,7 +35,7 @@ public class salesAnalysisGraph extends Application {
         //add values
         XYChart.Series benfordGraph = new XYChart.Series();
         benfordGraph.setName("Percentage of Benford Digit");
-        benfordGraph.getData().add(new XYChart.Data("1", 33));
+        benfordGraph.getData().add(new XYChart.Data("1", 43));
         benfordGraph.getData().add(new XYChart.Data("2"  , 25));
         benfordGraph.getData().add(new XYChart.Data("3"  , 10));
         benfordGraph.getData().add(new XYChart.Data("4", 33));
@@ -46,5 +52,5 @@ public class salesAnalysisGraph extends Application {
         stage.setHeight(500);
         stage.setWidth(600);
         stage.show();
-        }
+    }
 }
