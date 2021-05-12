@@ -59,7 +59,7 @@ public class salesAnalysisGraph extends Application {
 
 		// Add all the values to the 2d list and print it to "results.csv"
 		for (int i = 1; i < 10; i++) {
-		    firstNumsOutput[i] = new String[] {String.valueOf(i) ,String.valueOf(percentages[i-1])};
+		    firstNumsOutput[i] = new String[] {String.valueOf(i) ,String.valueOf(percentages[i-1]) + "%"};
 		}
 		outputFile("results.csv", firstNumsOutput);
 
@@ -285,7 +285,7 @@ public class salesAnalysisGraph extends Application {
 	 */	
 	for (String[] row: outputs) {
 	    for (String rowColumn : row) {
-		contentsToWrite += (rowColumn + ",");
+		contentsToWrite += (rowColumn + ", ");
 	    }
 	    contentsToWrite += "\n";
 	}
@@ -295,9 +295,10 @@ public class salesAnalysisGraph extends Application {
 	 * of the original contents from index 0 all the way to the last comma. Getting
 	 * string length returns how possible values can be stored, but not the max
 	 * storage. Consequently, the length will always be 1 more than the max. Thus,
-	 * removing 2 will remove 1 for this feature, and 1 for the comma.	
+	 * removing 3 will remove 1 for this feature, and 1 for the comma.
+	 * Also remove 1 for the extra space caused by the for loop.	
 	 */
-	contentsToWrite = contentsToWrite.substring(0, contentsToWrite.length() - 2);
+	contentsToWrite = contentsToWrite.substring(0, contentsToWrite.length() - 3);
 
 	System.out.println(contentsToWrite);			// Print contents to console
 
