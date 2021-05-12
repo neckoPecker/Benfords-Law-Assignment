@@ -9,8 +9,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 // Imports for I/O
+import java.util.Scanner;
+import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.File;
 
 public class salesAnalysisGraph extends Application {
 
@@ -22,9 +25,19 @@ public class salesAnalysisGraph extends Application {
     public void start(Stage stage) {
 
 	//Get percentages
-	int[] sales = getSalesData("./sales.csv");
+	int[] sales = getSalesData(getFilePath());
 	int[] firstNums = getFirstNums(sales);
 	float[] percentages = numberToPercentages(firstNums);
+
+	//CSV file
+	String[][] firstNumsOutput = new String[10][2];				// Represents 10 rows and 2 columns
+	firstNumsOutput[0] = new String[] {"Benford Number", "Percentage"};	//
+
+	// Add all the values to the 2d list and print it to "results.csv"
+	for (int i = 1; i < 10; i++) {
+	    firstNumsOutput[i] = new String[] {String.valueOf(i) ,String.valueOf(percentages[i-1])};
+	}
+	outputFile("results.csv", firstNumsOutput);
 
 	//Bar graph
 	stage.setTitle("Graph Stage");
@@ -170,7 +183,7 @@ public class salesAnalysisGraph extends Application {
 	return firstNums;
     }
 
-        /**
+    /**
      * Return the percentage of numbers of an array to their complete sum
      * @param numbers	The numbers to get the percentage from
      * @return		The percentage of all numbers to the sum of them (in order)	
@@ -192,5 +205,84 @@ public class salesAnalysisGraph extends Application {
 	}
 
 	return percentages;
+    }
+
+    /**
+     * Get and verify a csv file path form user
+     * <p>
+     * This method asks the user for an input for a file or location to a file. If the
+     * user inputted a file that doesn't exist, or just a directory, then it keeps asking
+     * until what they have entered is valid.	
+     * <p>
+     * @return	A valid string of a file path.
+     */
+    public static String getFilePath() {
+
+	Scanner scanner = new Scanner(System.in);
+	
+	boolean fileIsValid = false;
+	String filePath = "";
+
+	while (!fileIsValid) {					// Make sure filepath is valid
+	    
+	    System.out.print("Enter the path/location of the sales file: ");
+	    filePath = scanner.nextLine();
+	    File tmpFile = new File(filePath);
+
+	    if (tmpFile.exists() && !tmpFile.isDirectory()) {	// Exit loop if file exists and not a directory
+		fileIsValid = true;
+	    } else {						// Otherwise, redo the loop
+		System.out.println("File either does not exist or input was a directory.");
+		System.out.println("Please try again.\n");
+	    }
+	}
+
+	return filePath;
+    }
+
+    /**
+     * Write a multidimensional array into a file
+     * <p>
+     * The 2D array is used to represent a table of values. This should
+     * be created before calling this function.	
+     * <p>	
+     * @param fileLocation	Where the file should be written/created to.
+     * @param outputs	A 2D array, representing row and column values.	
+     */	
+    public static void outputFile(String fileLocation, String[][] outputs) {
+	
+	String contentsToWrite = "";
+	
+	/*
+	 * Before writing to the file, all the outputs are written to a string first
+	 * so that the file writer only has to write once to the file. It takes all
+	 * the inputs and then adds them to this string, sepearting each value with
+	 * a comma.
+	 */	
+	for (String[] row: outputs) {
+	    for (String rowColumn : row) {
+		contentsToWrite += (rowColumn + ",");
+	    }
+	    contentsToWrite += "\n";
+	}
+	
+	/*
+	 * Need to remove the comma at the very end of the string by taking a substring
+	 * of the original contents from index 0 all the way to the last comma. Getting
+	 * string length returns how possible values can be stored, but not the max
+	 * storage. Consequently, the length will always be 1 more than the max. Thus,
+	 * removing 2 will remove 1 for this feature, and 1 for the comma.	
+	 */
+	contentsToWrite = contentsToWrite.substring(0, contentsToWrite.length() - 2);
+
+	System.out.println(contentsToWrite);			// Print contents to console
+
+	try {
+	    FileWriter writer = new FileWriter(fileLocation);	// Write the contents to the file
+	    writer.write(contentsToWrite);
+	    writer.close();
+	} catch (Exception e) {
+	    System.out.println(e.getMessage());
+	}
     }
 }
