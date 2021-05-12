@@ -59,7 +59,7 @@ public class salesAnalysisGraph extends Application {
 
 		// Add all the values to the 2d list and print it to "results.csv"
 		for (int i = 1; i < 10; i++) {
-		    firstNumsOutput[i] = new String[] {String.valueOf(i) ,String.valueOf(percentages[i-1])};
+		    firstNumsOutput[i] = new String[] {String.valueOf(i) ,String.valueOf(percentages[i-1]) + "%"};
 		}
 		outputFile("results.csv", firstNumsOutput);
 
@@ -296,7 +296,7 @@ public class salesAnalysisGraph extends Application {
 	 */	
 	for (String[] row: outputs) {
 	    for (String rowColumn : row) {
-		contentsToWrite += (rowColumn + ",");
+		contentsToWrite += (rowColumn + ", ");
 	    }
 	    contentsToWrite += "\n";
 	}
