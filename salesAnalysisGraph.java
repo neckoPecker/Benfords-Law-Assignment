@@ -8,49 +8,189 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+// Imports for I/O
+import java.io.FileReader;
+import java.io.BufferedReader;
+
 public class salesAnalysisGraph extends Application {
-    
+
     public static void main(String[] args) {
-        Application.launch(args);
+	Application.launch(args);
     }
 
     @Override
     public void start(Stage stage) {
-        
-        //Start your code here Vaughn 
-        
-        
-        
-        //Bar graph
-        stage.setTitle("Graph Stage");
-        //x axis
-        CategoryAxis x = new CategoryAxis();
-        x.setLabel("Benford Digit");
-        //y axis
-        NumberAxis y = new NumberAxis();
-        y.setLabel("Percentage (%)");
-        //bar chart creation
-        BarChart analysisLawGraph = new BarChart(x, y);
-        analysisLawGraph.setTitle("Benford Law Analysis");
-        //add values
-        XYChart.Series benfordGraph = new XYChart.Series();
-        benfordGraph.setName("Percentage of Benford Digit");
-        benfordGraph.getData().add(new XYChart.Data("1", 43));
-        benfordGraph.getData().add(new XYChart.Data("2"  , 25));
-        benfordGraph.getData().add(new XYChart.Data("3"  , 10));
-        benfordGraph.getData().add(new XYChart.Data("4", 33));
-        benfordGraph.getData().add(new XYChart.Data("5"  , 25));
-        benfordGraph.getData().add(new XYChart.Data("6"  , 9));
-        benfordGraph.getData().add(new XYChart.Data("7", 33));
-        benfordGraph.getData().add(new XYChart.Data("8"  , 25));
-        benfordGraph.getData().add(new XYChart.Data("9"  , 10));
-        analysisLawGraph.getData().add(benfordGraph);
-        //vertical box
-        VBox vbox = new VBox(analysisLawGraph);
-        Scene sc = new Scene(vbox, 800, 700);
-        stage.setScene(sc);
-        stage.setHeight(500);
-        stage.setWidth(600);
-        stage.show();
+
+	//Get percentages
+	int[] sales = getSalesData("./sales.csv");
+	int[] firstNums = getFirstNums(sales);
+	float[] percentages = numberToPercentages(firstNums);
+
+	//Bar graph
+	stage.setTitle("Graph Stage");
+	//x axis
+	CategoryAxis x = new CategoryAxis();
+	x.setLabel("Benford Digit");
+	//y axis
+	NumberAxis y = new NumberAxis();
+	y.setLabel("Percentage (%)");
+	//bar chart creation
+	BarChart analysisLawGraph = new BarChart(x, y);
+	analysisLawGraph.setTitle("Benford Law Analysis");
+	//add values
+	XYChart.Series benfordGraph = new XYChart.Series();
+	benfordGraph.setName("Percentage of Benford Digit");
+	benfordGraph.getData().add(new XYChart.Data("1", 43));
+	benfordGraph.getData().add(new XYChart.Data("2", 25));
+	benfordGraph.getData().add(new XYChart.Data("3", 10));
+	benfordGraph.getData().add(new XYChart.Data("4", 33));
+	benfordGraph.getData().add(new XYChart.Data("5", 25));
+	benfordGraph.getData().add(new XYChart.Data("6", 9));
+	benfordGraph.getData().add(new XYChart.Data("7", 33));
+	benfordGraph.getData().add(new XYChart.Data("8", 25));
+	benfordGraph.getData().add(new XYChart.Data("9", 10));
+	analysisLawGraph.getData().add(benfordGraph);
+	//vertical box
+	VBox vbox = new VBox(analysisLawGraph);
+	Scene sc = new Scene(vbox, 800, 700);
+	stage.setScene(sc);
+	stage.setHeight(500);
+	stage.setWidth(600);
+	stage.show();
+    }
+
+    /**
+     * Gets an array of all the sales data found in a CSV file
+     * <p>
+     * Given a comma-seperated file, this method first parses the file into a string
+     * of comma-seperated values. Then, it splits the values into an array and
+     * returns an array containing only the sales data.
+     * <p>
+     * @param csvFileName	The path and directory of the csv file.	
+     * @return			Alls sales in the CSV file as an array of integers
+     */
+    public static int[] getSalesData(String csvFileName) {
+
+	String data = "";					// csvFileName will be parsed to this string
+	
+	/*
+	 * This section parses the file into a string by reading each line in the
+	 * file and putting it into the string. Since each row doesn't have a
+	 * comma seperating a row's value and the next row after that, it has to 
+	 * manually add it to the string.	
+	 */
+	try {
+	    BufferedReader fileReader = new BufferedReader(new FileReader(csvFileName));
+	    
+	    String fileLine;					// Represents the current line being parsed	    
+	    int fileLineNum = 1;				// Represents the current line number
+
+	    while ((fileLine = fileReader.readLine()) != null) {
+
+		if (fileLineNum != 1) {				// Don't include the header at row 
+		    data = data + fileLine + ",";		// Add comma delimter
+		}
+		
+		fileLineNum++;					// Represents the next line number
+	    }
+
+	    data = data.substring(0, data.length() - 1);	// Remove the last comma from data string
+
+	    fileReader.close();
+	    
+	} catch (Exception e) {					// Report error in case anything goes wrong,
+	    System.out.println("Something went wrong:");	// such as the file being unavailable.
+	    System.out.println(e.getMessage());
+	}
+
+	/*
+	 * This section splits the values seperated by commas within the data 
+	 * string into an array of String values. An integer array will be 
+	 * made at half the size of the string array to only get the sales
+	 * data.
+	 */
+	String[] salesArray = data.split(",");			// Split the data string into an array
+
+	int[] sales = new int[salesArray.length / 2];		// Array to hold all the sales data
+
+	int salesElement = 0;					// Holds which index to hold the sales data in
+	
+	for (int i = 1; i < salesArray.length; i +=2) {			// i starts at 1 because all sales data
+	    sales[salesElement] = Integer.parseInt(salesArray[i]);	// is stored in the second column
+	    salesElement++;
+	}
+	
+	return sales;
+    }
+
+    /**
+     * Get first digit number quantities from 1 to 9.
+     * <p>
+     * In accordance to Benford's Law, it states that the first digits
+     * that should appear the most is 1 and 2. If graphically layed out,
+     * there should be a natural cuve from 1 to 9. For the purpose of
+     * the assignment, if the fequency percentage of 1 appears between
+     * 29% and 32%, fraud most likely had not happen.	
+     * <p>	
+     * @param numbers	An array of integers to check for first-digit	
+     * @return		The frequency of each first digit number
+     */
+    public static int[] getFirstNums(int[] numbers) {
+
+	/*
+	 * The strategy for getting the first numbers is to iterate through all
+	 * the numbers 9 times from 1 to 9. For each number, it checks the first
+	 * digit and, if it is equal to the number being checked, it is added to 
+	 * the array of the same index.	
+	 */
+	int[] firstNums = new int[9];				// Array consisting frequency of numbers
+								// from 1 to 9.
+
+	for (int i = 0; i < 9; i++) {
+	    for (int number : numbers) {
+		
+		/*
+		 * Integer -> String -> Character -> Integer
+		 * 	Each number gets converted to a string. Using the function
+		 * 	'charAt(0)', I can get the first element of the string, but
+		 * 	as a character. Then I use a character method to convert
+		 * 	a characater value back into an integer.
+		 * 
+		 * For example, say that 45638 was the number to check:
+		 * 	(int) 45638 -> (string) "45638" -> (char) '4' -> (int) 4
+		 */
+		int firstDigit = Character.getNumericValue(Integer.toString(number).charAt(0));
+
+		if (firstDigit == i + 1) {			// Add 1, otherwise it would check
+		    firstNums[i]++;				// numbers 0-8 instead.
+		}
+	    }
+	}
+	
+	return firstNums;
+    }
+
+        /**
+     * Return the percentage of numbers of an array to their complete sum
+     * @param numbers	The numbers to get the percentage from
+     * @return		The percentage of all numbers to the sum of them (in order)	
+     */
+    public static float[] numberToPercentages(int[] numbers) {
+
+	int numTotal = 0;
+	
+	for (int number : numbers) {				// Add sum of all numbers in total
+	    numTotal += number;
+	}
+
+	float[] percentages = new float[numbers.length];	// Size of array of percentage is the
+								// same as size of array of numbers
+	
+	for (int i = 0; i < numbers.length; i++) {
+	    percentages[i] = (float) numbers[i] / numTotal * 100;	// Divide number to total for decimal
+	    								// and multiply by 100 for percentage
+	}
+
+	return percentages;
     }
 }
