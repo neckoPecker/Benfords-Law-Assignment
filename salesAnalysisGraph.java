@@ -1,3 +1,4 @@
+//Importing JavaFX applications 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -8,9 +9,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class salesAnalysisGraph extends Application {
+    
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
+
     @Override
-    public void start(Stage s) {
-        s.setTitle("Benford Law Analysis");
+    public void start(Stage stage) {
+        stage.setTitle("Graph Stage");
         //x axis
         CategoryAxis x = new CategoryAxis();
         x.setLabel("Benford Digit");
@@ -36,12 +42,9 @@ public class salesAnalysisGraph extends Application {
         //vertical box
         VBox vbox = new VBox(analysisLawGraph);
         Scene sc = new Scene(vbox, 800, 700);
-        s.setScene(sc);
-        s.setHeight(500);
-        s.setWidth(600);
-        s.show();
+        stage.setScene(sc);
+        stage.setHeight(500);
+        stage.setWidth(600);
+        stage.show();
         }
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
 }
