@@ -63,6 +63,13 @@ public class salesAnalysisGraph extends Application {
 		}
 		outputFile("results.csv", firstNumsOutput);
 
+		// Check if fraud has occured
+		if (percentages[0] >= 29 && percentages[0] <= 32) {
+		    System.out.println("Fraud has not likely occured.");
+		} else {
+		    System.out.println("ALERT! FRAUD HAS LIKELY OCCURED!!!");
+		}
+
 		/*
 		Bar Graph
 
