@@ -1,6 +1,6 @@
 /*
 Due date: 2021, 05, 12
-Date: 2021, 05, 10
+Date: 2021, 05, 09
 Names: Tyson Z and Vaughn C
 Teacher: Mr. Ho
 Description: This code will be able receive files, read them, and be able to find the first digit distribution 
@@ -27,7 +27,12 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
 
-//Public application class for JavaFX applications to extend off
+/*
+Class name: salesAnalysisGraph 
+Description: Public application class for JavaFX applications to extend off. It will have methods that will run the application/program
+@author: Tyson Z and Vaughn C
+@since: 2021, 05, 09
+*/
 public class salesAnalysisGraph extends Application {
 	/*
 	Method Name: main()
@@ -51,8 +56,10 @@ public class salesAnalysisGraph extends Application {
 
 		//Calls the method getSalesData() to read the file and store in int[] sales
 		int[] sales = getSalesData(getFilePath());
+
 		//Calls the method getFirstNums() to get the values of each digit and store in int[] firstNums
 		int[] firstNums = getFirstNums(sales);
+
 		//Calls the method numberToPercentages to calculate the percentages and store in float[] percentages
 		float[] percentages = numberToPercentages(firstNums);
 
@@ -66,18 +73,31 @@ public class salesAnalysisGraph extends Application {
 		}
 		outputFile("results.csv", firstNumsOutput);
 
+		//Initializes a new text object to create graphical message
 		Text t = new Text();
 		t.setFont(Font.font ("Verdana", 15));
+
 		// Check if fraud has occured
 		if (percentages[0] >= 29 && percentages[0] <= 32) {
+
+			//Print statement in terminal 
 		    System.out.println("Fraud has not likely occured.");
+
 			//Sets text for displaying in bar graph alerting the user
 			t.setText(" > Fraud has not likely occured.");
+
+			//Sets colour of text
 			t.setFill(Color.BLUE);
+
 		} else {
-		    System.out.println("ALERT! FRAUD HAS LIKELY OCCURED!!!");
+
+			//Print statement in terminal 
+		    System.out.println("ALERT! FRAUD HAS LIKELY OCCURED!");
+
 			//Sets text for displaying in bar graph alerting the user
-			t.setText(" > ALERT! FRAUD HAS LIKELY OCCURED!!!");
+			t.setText(" > ALERT! FRAUD HAS LIKELY OCCURED!");
+
+			//Sets colour of text
 			t.setFill(Color.RED);
 		}
 		/*
@@ -89,42 +109,54 @@ public class salesAnalysisGraph extends Application {
 
 		//Creates a new x/Category Axis of the bar graph
 		CategoryAxis x = new CategoryAxis();
+
 		//Names the label of x Axis
 		x.setLabel("First Digit");
+
 		//Creates a new y/Number Axis of the bar graph
 		NumberAxis y = new NumberAxis();
+
 		//Names the label of y Axis
 		y.setLabel("Percentage (%)");
+
 		//Creates a new bar graph with axes
 		BarChart analysisLawGraph = new BarChart(x, y);
+
 		//Sets the title of the bar graph to be displayed
-		analysisLawGraph.setTitle("Sales Distribution Graphical Dislpay");
+		analysisLawGraph.setTitle("Sales Distribution Graphical Display");
+
 		//Creating a new series to store the data
 		XYChart.Series benfordGraph = new XYChart.Series();
+
 		//Names the series for the legend
 		benfordGraph.setName("Percentage of the First Digit");
+
 		//For loop that is able to call values from percentages and place them into series
 		for (int k = 0; k < percentages.length; k++){
+
 			//Converts the for loop value from int to string for Benford first digit
 			String benfordDigit = String.valueOf(k+1);
+
 			//Calls the percentages for digits and adds them to series 
 			benfordGraph.getData().add(new XYChart.Data(benfordDigit,percentages[k]));
+
 		}
 		//Adds the data of series to the bar graph 
 		analysisLawGraph.getData().add(benfordGraph);
-		
-
-
 
 		//Creates a new Vertical box to place the bar graph
 		VBox vbox = new VBox(analysisLawGraph, t);
+
 		//Creates a new scene with the bar graph in it
 		Scene sc = new Scene(vbox, 1000, 1000);
+
 		//Adds the new scene to the one from JavaFx packages
 		stage.setScene(sc);
+
 		//Sets the original scene to dimensions
 		stage.setHeight(465);
 		stage.setWidth(600);
+
 		//Displays the stage with the bar graph in it
 		stage.show();
     }
